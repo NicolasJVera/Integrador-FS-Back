@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import User from "../models/User.js";
+import User from "../models/user.js";
 
 const validateExistUser = async (value) => {
   const user = await User.findOne({ correo: value });
