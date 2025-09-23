@@ -65,3 +65,31 @@ export const refreshToken = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Obtener usuario autenticado
+export const me = async (req, res) => {
+  try {
+    // Extraer token desde Authorization
+    const authHeader = req.headers["authorization"] || "";
+    const directToken = req.headers["token"];
+    let token = null;
+    if (authHeader.toLowerCase().startsWith("bearer ")) {
+      token = authHeader.slice(7);
+    } else if (typeof directToken === "string" && directToken.trim()) {
+      token = directToken.trim();
+    }
+
+    if (!token) {
+      return res.status(401).json({ error: "No se proporcionó token" });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_KEY);
+    const user = await User.findById(decoded.user).select("nombre correo");
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(401).json({ error: "Token inválido" });
+  }
+};
