@@ -27,7 +27,6 @@ const loginValidator = [
   body("clave")
     .isLength({ min: 8 })
     .withMessage("La clave debe tener al menos 8 caracteres"),
-  body("clave").isStrongPassword().withMessage("La clave debe ser fuerte"),
   body("correo").custom(validateExist),
   body("clave").custom(validatePassword),
 ];
