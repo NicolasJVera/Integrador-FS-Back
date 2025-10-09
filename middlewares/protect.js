@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/order.js";
+import User from "../models/user.js";
 const protect = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
