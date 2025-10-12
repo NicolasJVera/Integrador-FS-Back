@@ -6,7 +6,7 @@ import hasErrors from "../middlewares/hasErrors.js";
 
 const router = Router();
 
-router.post("/", [protect, orderValidation, hasErrors], createOrder);
+router.post("/", [ orderValidation, hasErrors], createOrder);
 router.get("/", protect, getOrders);
 
 export default router;
