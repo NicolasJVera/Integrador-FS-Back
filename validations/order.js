@@ -3,7 +3,7 @@ import { body } from "express-validator";
 const orderValidation = [
   body("items")
     .isArray({ min: 1 })
-    .withMessage("Items must be an array")
+    .withMessage("Los artículos deben ser un array")
     .custom((value) => {
       if (
         !value.every(
@@ -12,18 +12,19 @@ const orderValidation = [
             item.quantity &&
             item.price &&
             item.title &&
-            item.description
+            item.description &&
+            item.image
         )
       ) {
         throw new Error(
-          "Items must contain id, quantity, price, title and description"
+          "Los artículos deben contener id, cantidad, precio, título, descripción e imagen"
         );
       }
       return true;
     }),
   body("shippingDetails")
     .isObject()
-    .withMessage("Shipping details must be an object")
+    .withMessage("Los detalles de envío deben ser un objeto")
     .custom((value) => {
       if (
         !value.name ||
@@ -32,17 +33,17 @@ const orderValidation = [
         !value.location
       ) {
         throw new Error(
-          "Shipping details must contain name, cellphone, address, and location"
+          "Los detalles de envío deben contener nombre, teléfono, dirección y localidad"
         );
       }
       return true;
     }),
   body("shippingCost")
     .isNumeric()
-    .withMessage("Shipping cost must be a number")
+    .withMessage("El costo de envío debe ser un número")
     .custom((value) => {
       if (value < 0) {
-        throw new Error("Shipping cost must be a positive number");
+        throw new Error("El costo de envío debe ser un número positivo");
       }
       return true;
     }),
