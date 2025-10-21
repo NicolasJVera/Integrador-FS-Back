@@ -12,11 +12,12 @@ const orderValidation = [
             item.quantity &&
             item.price &&
             item.title &&
-            item.description
+            item.description &&
+            item.image
         )
       ) {
         throw new Error(
-          "Los artículos deben contener id, cantidad, precio, título y descripción"
+          "Los artículos deben contener id, cantidad, precio, título, descripción y imagen"
         );
       }
       return true;

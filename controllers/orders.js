@@ -2,6 +2,8 @@ import Order from "../models/order.js";
 
 export const createOrder = async (req, res) => {
   try {
+    console.log('Datos recibidos en createOrder:', req.body);  // Ver datos
+    console.log('Usuario autenticado:', req.user);  // Ver user
     const { items, shippingDetails, shippingCost } = req.body;
     const subtotal = items.reduce(
       (acc, item) => acc + item.price * item.quantity,
@@ -17,8 +19,10 @@ export const createOrder = async (req, res) => {
       total,
     });
     await order.save();
+    console.log('Order guardada:', order);  // Ver order
     res.status(201).json({ order });
   } catch (error) {
+    console.error('Error en createOrder:', error); // clg
     res.status(500).json({ error: error.message });
   }
 };
